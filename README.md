@@ -1,2 +1,2 @@
 # expeyesRVCE
-Testing dd
+Testing gitpull from script
