@@ -3,6 +3,8 @@ import sys, time, math, importlib, os, platform, os.path, configparser
 from utils import cnf
 
 from QtVersion import *
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QLabel
 showVersions()
 
 import pyqtgraph as pg
@@ -149,8 +151,8 @@ ECE3rdSemExptScope = [
 
 ]
 Physics1stSem = [
-	[QT_TRANSLATE_NOOP('MainWindow','NPN I/O Characteristics'), 'npnCE_N']	,
-	[QT_TRANSLATE_NOOP('MainWindow','PNP I/O Characteristics'), 'npnCE_N'],	 #Check this once if code works for PNP
+	[QT_TRANSLATE_NOOP('MainWindow','NPN Characteristics'), 'npnCE_N']	,
+	#[QT_TRANSLATE_NOOP('MainWindow','PNP Characteristics'), 'npnCE_N'],	 #Check this once if code works for PNP
 	[QT_TRANSLATE_NOOP('MainWindow','RC Transient response'),'RCtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RL Transient response'),'RLtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RLC transient response'),'RLCtransient'],
@@ -205,9 +207,14 @@ class MainWindow(QMainWindow):
 		self.statusBar = QStatusBar()
 		self.setStatusBar(self.statusBar)
 		self.statusBar.addWidget(self.helpCB)
-		
+		label = QLabel(self)
+		pixmap = QPixmap('rvce.JPG')
+		pixmap = pixmap.scaled(90,90,Qt.KeepAspectRatio, Qt.FastTransformation)
+		label.setPixmap(pixmap)
+		label.setAlignment(Qt.AlignRight)
+		self.statusBar.addWidget(label,12)
 		self.callExpt(Physics1stSem[0])					# Start the scope by default
-
+		print(Physics1stSem)
 		self.screen = QDesktopWidget().screenGeometry()
 		self.show()
 		self.move(20, 20)
