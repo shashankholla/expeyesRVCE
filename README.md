@@ -1,7 +1,7 @@
-# Test
+# Get started with ExpeyesRVCE
+Note: This code is based off of [Expeyes website] (http://expeyes.in) and is under GNU GPL licence. The code in this repo is open to modifications.
 
-
-How to install expeyes on an Ubuntu based Linux Distribution?
+## How to install expeyes on an Ubuntu based Linux Distribution?
 
 1. Open the terminal by pressing Win+T
 2. Copy paste the following commands
@@ -16,7 +16,7 @@ How to install expeyes on an Ubuntu based Linux Distribution?
 Please be patient as this will take some time. Once all commands are executed, you can now find ExpEYES-RVCE logo in the launcher.
 
 
-How to use Expeyes-RVCE?
+## How to use Expeyes-RVCE?
 
 Step1: Click on the expeyesRVCE logo in the launcher.
 
