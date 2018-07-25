@@ -207,14 +207,15 @@ class MainWindow(QMainWindow):
 		self.statusBar = QStatusBar()
 		self.setStatusBar(self.statusBar)
 		self.statusBar.addWidget(self.helpCB)
-		label = QLabel(self)
-		pixmap = QPixmap('rvce.JPG')
-		pixmap = pixmap.scaled(90,90,Qt.KeepAspectRatio, Qt.FastTransformation)
-		label.setPixmap(pixmap)
-		label.setAlignment(Qt.AlignRight)
-		self.statusBar.addWidget(label,12)
+		self.label = QLabel(self)
+		pixmap = QPixmap('rvce.png')
+		pixmap = pixmap.scaled(60,60,Qt.KeepAspectRatio)
+		self.label.setPixmap(pixmap)
+		self.label.setAlignment(Qt.AlignRight)
+		self.statusBar.addWidget(self.label,20)
+		
 		self.callExpt(Physics1stSem[0])					# Start the scope by default
-		print(Physics1stSem)
+		
 		self.screen = QDesktopWidget().screenGeometry()
 		self.show()
 		self.move(20, 20)
@@ -231,6 +232,10 @@ class MainWindow(QMainWindow):
 	
 	
 	def scope_help(self,e):
+		if e in ECE3rdSemExptScope:
+			self.label.setHidden(False)
+		else:
+			self.label.setHidden(True)
 		self.hlpName = e[1]
 		if self.expName != 'scope':
 			explib = importlib.import_module('scope')
@@ -253,6 +258,11 @@ class MainWindow(QMainWindow):
 	
 
 	def callExpt(self, e):
+		print(e)
+		if e in ECE3rdSemExpt or (e in Physics1stSem):
+			self.label.setHidden(False)
+		else:
+			self.label.setHidden(True)
 		explib = importlib.import_module(e[1])
 		try:
 			if self.expWidget != None:
