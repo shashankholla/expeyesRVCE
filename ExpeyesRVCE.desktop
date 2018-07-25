@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=ExpeyesRVCE
+Terminal=false
+Name=ExpeyesRVCE
+Exec=bash ~/Documents/expeyes/expeyesRVCE-master/run.sh
+Type=Application
+Icon=google-chrome
