@@ -1,0 +1,3 @@
+#!/bin/sh
+cd $HOME/expgit/expeyesRVCE/
+python3 $HOME/expgit/expeyesRVCE/main.py

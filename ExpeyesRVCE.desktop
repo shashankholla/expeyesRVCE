@@ -1,7 +1,15 @@
 [Desktop Entry]
-Comment=ExpeyesRVCE
-Terminal=false
-Name=ExpeyesRVCE
-Exec=bash ~/Documents/expeyes/expeyesRVCE-master/run.sh
+Version=5.0.0
 Type=Application
-Icon=google-chrome
+
+Exec=sh -c "$HOME/expgit/expeyesRVCE/run"
+Icon=eyes17-logo.png
+
+Name=ExpEYES-RVCE
+Comment=EXPEYES-RVCE
+
+Categories=GNOME;Application;Education;Science;
+
+Terminal=false
+NoDisplay=false
+StartupNotify=false
