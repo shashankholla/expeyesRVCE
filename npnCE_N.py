@@ -15,7 +15,7 @@ class Expt(QWidget):
 	running = False
 	
 	VMIN = 0
-	VMAX = 0.5
+	VMAX = 0.7
 	VMAX2 = 5
 	VSET = VMIN
 	VSET2 = VMIN
@@ -382,7 +382,9 @@ class Expt(QWidget):
 		if V_BE > self.VMAX or I_B > 6:
 			self.running = False
 			self.history.append(self.data)
-			self.history[0][0].insert(0,"Voltage(V)")
+			#self.history[0][0].insert(0,"Voltage(V)")
+			#self.history[1][0].insert(0,"Current(uA)")
+
 			self.traces.append(self.currentTrace)
 			self.msg(self.tr('Completed plotting I-V'))
 
@@ -519,6 +521,7 @@ class Expt(QWidget):
 		#print(va,i)		   # in mA, R= 1k
 		self.data2[0].append(va)
 		self.data2[1].append(i)
+		self.Results.append("("+str(round(float(va),2)) + "V, "+str(round(float(i),2))+"uA)")
 		self.VSET2 += self.STEP2
 		print(self.VSET2)
 		if self.VSET2 > self.VMAX2:

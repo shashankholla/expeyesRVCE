@@ -20,6 +20,7 @@ class Expt(QWidget):
 	IMAX = 5
 	STEP = 0.050	   # 50 mV
 	data = [ [], [] ]
+	legends = []
 	currentTrace = None
 	traces = []
 	history = []		# Data store	
@@ -130,9 +131,24 @@ class Expt(QWidget):
 			self.history.append(self.data)
 			self.traces.append(self.currentTrace)
 			self.msg(self.tr('Completed plotting I-V'))
+			if self.data[1][0] < -0.1:
+				l = pg.TextItem(text="Reverse Biased")
+				l.setPos(self.data[0][0],self.data[1][0])
+				self.legends.append(l)
+				self.pwin.addItem(l)
+				print(self.pwin)
+			if self.data[1][-1] > 0.1:
+				l = pg.TextItem(text="Forward Biased")
+				#print("Forward Biased Coord",self.data[1][-1],self.data[0][-1])
+				l.setPos(self.data[0][-1],self.data[1][-1])
+				self.legends.append(l)
+				self.pwin.addItem(l)	
 			return
 		if self.index > 1:			  # Draw the line
 			self.currentTrace.setData(self.data[0], self.data[1])
+			
+				#self.legends.append(l)
+		
 		self.index += 1
 
 	def start(self):
@@ -173,6 +189,8 @@ class Expt(QWidget):
 		self.history = []
 		self.data = [ [], [] ]
 		self.trial = 0
+		for c in self.legends:
+			self.pwin.removeItem(c)
 		self.msg(self.tr('Cleared Traces and Data'))
 		
 	def save_data(self):
@@ -181,7 +199,7 @@ class Expt(QWidget):
 			return
 		fn = QFileDialog.getSaveFileName()
 		if fn != '':
-			self.p.save(self.history, fn)
+			self.p.save(self.history, fn[0])
 			self.msg(self.tr('Traces saved to ') + unicode(fn))
 		
 	def msg(self, m):

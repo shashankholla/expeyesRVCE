@@ -190,6 +190,7 @@ class Expt(QWidget):
 		except:
 			self.comerr()
 			return		
+		print("Charging")
 		self.traces.append(self.pwin.plot(t,v, pen = self.trial*2))
 		self.history.append((t,v))
 		self.trial += 1

@@ -154,7 +154,8 @@ class Expt(QWidget):
 		try:
 			self.p.set_state(OD1=0)		# OD1 to LOW
 			time.sleep(self.tbvals[self.TBval]*0.01)
-			t,v = self.p.capture_action('A1',self.NP, self.TG,'SET_HIGH')
+			t,v = self.p.capture_action('A1',self.NP*1000, self.TG*1000,'SET_HIGH')
+			print(t,v)
 		except:
 			self.comerr()
 			return 

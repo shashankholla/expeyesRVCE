@@ -2992,7 +2992,9 @@ class Interface():
 		#f = builtins.open(str(filename),'w')
 		print(filename[0])
 		f = builtins.open(filename,'w')
+		print(data)
 		for xy in data:
+			
 			for k in range(len(xy[0])):
 				f.write('%5.3f  %5.3f\n'%(xy[0][k], xy[1][k]))
 			f.write('\n')
