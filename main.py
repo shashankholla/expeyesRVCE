@@ -209,7 +209,8 @@ class MainWindow(QMainWindow):
 		self.statusBar.addWidget(self.helpCB)
 		self.label = QLabel(self)
 		pixmap = QPixmap('rvce.png')
-		pixmap = pixmap.scaled(60,60,Qt.KeepAspectRatio)
+		pixmap = pixmap.scaled(100,100,Qt.KeepAspectRatio,Qt.SmoothTransformation)
+		
 		self.label.setPixmap(pixmap)
 		self.label.setAlignment(Qt.AlignRight)
 		self.statusBar.addWidget(self.label,20)
