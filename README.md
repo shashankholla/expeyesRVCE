@@ -57,13 +57,12 @@ capacitance values, upto 10 nanoFarads, results may not be very accurate beyond 
 Capable of measuring frequencies upto several MHz.
 
 **Resistive Sensor Input (SEN):**  
-This is mainly meant for sensors like Light Dependent Resistor, Thermistor, Photo-  
-transistor etc. SEN is internally connected to 3.3 volts through a 5.1kΩ resistor.
+This is mainly meant for sensors like Light Dependent Resistor, Thermistor, Photo-transistor etc. SEN is internally connected to 3.3 volts through a 5.1kΩ resistor.
 
 **±16V Analog Inputs, A1 & A2:** Can measure voltage within the ±16 volts range. The input voltage range can be selected from .5V to 16V fullscale. Voltage at these terminals can be displayed as a function of time, giving the functionality of a low frequency oscilloscope. The maximum sampling rate is 1 Msps /channel. Both have an input impedance of 1MOhm
 
 **±3.3V Analog Input A3:**  
-Can measure voltage within the ± 3.3 volts range. The input can be amplied by connecting a resistor from Rg to Ground, gain = 1 + Rg/10000. This enables displaying very small amplitude signals. The input impedance of A3 is 10MOhm
+Can measure voltage within the ± 3.3 volts range. The input can be amplified by connecting a resistor from Rg to Ground, gain = 1 + Rg/10000. This enables displaying very small amplitude signals. The input impedance of A3 is 10MOhm.
 
 **Microphone input MIC:** This enables displaying very small amplitude signals. The input impedance
 
