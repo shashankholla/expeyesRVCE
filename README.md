@@ -1,4 +1,3 @@
-Welcome file
 
 # **The equipment**
 
