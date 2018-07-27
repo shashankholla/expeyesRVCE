@@ -3,8 +3,11 @@ import sys, time, math, importlib, os, platform, os.path, configparser
 from utils import cnf
 
 from QtVersion import *
-from PyQt5.QtGui import QPixmap
+
+
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QLabel
+
 showVersions()
 
 import pyqtgraph as pg
@@ -168,10 +171,26 @@ Physics1stSem = [
 class helpWin(QWebView):
 	def __init__(self, name = ''):
 		QWebView.__init__(self)
+		
 		fn = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html', name[1]+'.html')
 		self.load(QUrl.fromLocalFile(fn))
 		self.setWindowTitle(unicode(self.tr('Help: %s')) %name[0])
 		self.setMaximumSize(QSize(500, 1200))
+		self.show()
+		
+		
+		screen = QDesktopWidget().screenGeometry()
+		self.move(screen.width()-self.width()-20, screen.height()-self.height()-60)
+	def closeEvent(self,QCloseEvent):
+		MainWindow.disableCheckBox(mw)
+class expeyesHelpClass(QWebView):
+	def __init__(self, name = ''):
+		QWebView.__init__(self)
+		
+		fn = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html', 'help.html')
+		self.load(QUrl.fromLocalFile(fn))
+		self.setWindowTitle(unicode(self.tr('Help: %s')) %name[0])
+		self.setMaximumSize(QSize(900, 1200))
 		self.show()
 		screen = QDesktopWidget().screenGeometry()
 		self.move(screen.width()-self.width()-20, screen.height()-self.height()-60)
@@ -184,9 +203,11 @@ class MainWindow(QMainWindow):
 	expName = ''
 	hlpName = ''
 	hwin = None
+	ehwin = None
 	
 	def closeEvent(self, e):
 		if self.hwin != None:
+			print("Close")
 			self.hwin.close()
 
 	def __init__(self):
@@ -210,7 +231,7 @@ class MainWindow(QMainWindow):
 		self.label = QLabel(self)
 		pixmap = QPixmap('rvce.png')
 		pixmap = pixmap.scaled(100,100,Qt.KeepAspectRatio,Qt.SmoothTransformation)
-		
+	
 		self.label.setPixmap(pixmap)
 		self.label.setAlignment(Qt.AlignRight)
 		self.statusBar.addWidget(self.label,20)
@@ -228,10 +249,17 @@ class MainWindow(QMainWindow):
 			if self.hwin == None: 
 				self.hwin = helpWin((self.title,self.hlpName))
 			self.hwin.show()
+			
+			
 		else:
-			if self.hwin != None: self.hwin.hide()
+			if self.hwin != None: 
+				self.hwin.hide()
+			
+			self.helpCB.setCheckState(False)
+
 	
-	
+	def disableCheckBox(self):
+		self.helpCB.setChecked(False)
 	def scope_help(self,e):
 		if e in ECE3rdSemExptScope:
 			self.label.setHidden(False)
@@ -384,6 +412,18 @@ class MainWindow(QMainWindow):
 		 	#em.addAction(self.tr(e[0]),  lambda item=e: self.callExpt(item))	
 		for e in Physics1stSem:
 			y.addAction(self.tr(e[0]),  lambda item=e: self.callExpt(item))
+
+		self.help = QAction("Help")
+		bar.addAction(self.help)
+		self.help.triggered.connect(self.expeyesHelp)
+
+	def expeyesHelp(self):
+	
+		self.ehwin = expeyesHelpClass(("Help","help"))
+		self.ehwin.show()
+		#else:
+		#	self.ehwin.hide()
+		
 
 	def reconnect(self):
 		global p

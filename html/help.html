@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="the-equipment"><strong>The equipment</strong></h1>
+<ul>
+<li>
+<p>ExpEYES-17 is interfaced and powered by the USB port of the computer, and it is programmable in Python.</p>
+</li>
+<li>
+<p>It can function as a low frequency oscilloscope, function generator, programmable voltage source, frequency counter and data logger.</p>
+</li>
+<li>
+<p>The software can monitor and control the voltages at these terminals. In order to measure other parameters (like temperature, pressure etc.), we need to convert them in to electrical signals by using appropriate sensor elements.</p>
+</li>
+<li>
+<p>The device can be also used as a test equipment for electrical and electronics engineering experiments.</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="note-the-external-voltages-connected-to-expeyes17-must-be-within-the-allowed-limits.-inputs-a1-and-a2-must-be-with--16-volts-range-and-inputs-in1-and-in2-must-be-in-0-to-3.3v-range.-exceeding-these-limits-may-result-in-damage-to-the-equipment.-to-measure-higher-voltages-scale-them-down-using-resistive-potential-divider-networks.">NOTE: The external voltages connected to ExpEYES17 must be within the allowed limits. Inputs A1 and A2 must be with +/-16 volts range and Inputs IN1 and IN2 must be in 0 to 3.3V range. Exceeding these limits may result in damage to the equipment. To measure higher voltages, scale them down using resistive potential divider networks.</h4>
+</blockquote>
+<h2 id="external-connections">1.1.External Connections</h2>
+<img src="images/equipment.png" alt="alt text">
+<p><strong>Constant Current Source (CCS) :</strong></p>
+<p>The constant current source can be switched ON and OFF under software control.</p>
+<p>The nominal value is 1.1 mA but may vary from unit to unit, due to component tolerances. To measure the exact value, connect an ammeter from CCS to GND. Another method is to connect a known resistance (~1k) and measure the voltage drop across it. The load resistor should be less than 3k for this current source.</p>
+<p><strong>Programmable Voltage (PV1) :</strong></p>
+<p>Can be set, from software, to any value in the -5V to +5V range. The resolution is 12 bits, implies a minimum voltage step of around 2.5 millivolts.</p>
+<p><strong>Programmable Voltage (PV2) :</strong></p>
+<p>Can be set, from software, to any value in the -3.3V to +3.3V range. The resolution</p>
+<p>is 12 bits.</p>
+<p><strong>Square Wave SQ1:</strong></p>
+<p>Output swings from 0 to 5 volts and frequency can be varied 4Hz to 100kHz. All intermediate values of frequency are not possible.</p>
+<p><strong>Square Wave SQ2:</strong><br>
+Output swings from 0 to 5 volts and frequency can be varied 4Hz to 100kHz. All intermediate values<br>
+of frequency are not possible. The duty cycle of the output is programmable. SQR2 is not available when WG is active.<br>
+<strong>Digital Output (OD1) :</strong><br>
+The voltage at OD1 can be set to 0 or 5 volts, using software.</p>
+<p><strong>Sine/Triangular Wave WG:</strong><br>
+Frequency can be varied from 5Hz to 5kHz. The peak value of the amplitude can be set to<br>
+3 volts, 1.0 volt or 80 mV. Shape of the output waveform is programmable. Using the GUI sine or triangular can be selected. WG bar is inverted WG.</p>
+<h2 id="inputs"><strong>Inputs:</strong></h2>
+<p><strong>Capacitance meter IN1:</strong><br>
+Capacitance connected between IN1 and Ground can be measured. It works better for lower<br>
+capacitance values, upto 10 nanoFarads, results may not be very accurate beyond that.</p>
+<p><strong>Frequency Counter IN2:</strong><br>
+Capable of measuring frequencies upto several MHz.</p>
+<p><strong>Resistive Sensor Input (SEN):</strong><br>
+This is mainly meant for sensors like Light Dependent Resistor, Thermistor, Photo-<br>
+transistor etc. SEN is internally connected to 3.3 volts through a 5.1kΩ  resistor.</p>
+<p><strong>±16V Analog Inputs, A1 &amp; A2:</strong> Can measure voltage within the ±16 volts range. The input voltage range can be selected from .5V to 16V fullscale. Voltage at these terminals can be displayed as a function of time, giving the functionality of a low frequency oscilloscope. The maximum sampling rate is 1 Msps /channel. Both have an input impedance of  1MOhm</p>
+<p><strong>±3.3V Analog Input A3:</strong><br>
+Can measure voltage within the ± 3.3 volts range. The input can be amplied by connecting a resistor from Rg to Ground, gain = 1 + Rg/10000. This enables displaying very small amplitude signals. The input impedance of A3 is 10MOhm</p>
+<p><strong>Microphone input MIC:</strong> This enables displaying very small amplitude signals. The input impedance</p>
+<p><strong>I2C Sensor Interface:</strong><br>
+The four connections (+5V, Ground, SCL and SDA) of the 8 terminal berg strip supports I2C sensors.<br>
+The software is capable of recognizing a large number of commercially available I2C sensors.</p>
+<p><strong>±6V /10mA Power supply:</strong><br>
+The VR+ and VR- are regulated power outputs. They can supply very little current, but good enough to power an Op-Amp.</p>
+<h2 id="how-to-use-expeyes-rvce">How to use Expeyes-RVCE?</h2>
+<p><strong>Step1</strong>: Click on the expeyesRVCE logo in the launcher.</p>
+<p><strong>Step2</strong>: Now you should see the expeyes window open. And you should, by default, be in the NPN Characteristics window.<br>
+<img src="images/1.jpg" alt="alt text"></p>
+<blockquote>
+    <h4 id="note-the-external-voltages-connected-to-expeyes17-must-be-within-the-allowed-limits.-inputs-a1-and-a2-must-be-with--16-volts-range-and-inputs-in1-and-in2-must-be-in-0-to-3.3v-range.-exceeding-these-limits-may-result-in-damage-to-the-equipment.-to-measure-higher-voltages-scale-them-down-using-resistive-potential-divider-networks."><ul><li>The buttons on the right control the experiment. The output is shown in the central graph area (and sometimes in red text below the graph). Most experiments will have start, stop and savedata buttons.</li> 
+    <li>Right click on the graph to see extra options about the graph. You can export the graph as an image, change the scale of the graph
+      as per requirement and more. 
+    </li>
+    <li>You can move around the graph by clicking and dragging on it. Use the mouse scroll to zoom in/out of the graph</li>
+    
+    
+    </ul></h4>
+    </blockquote>
+<p><strong>Step3</strong>: Read the guide for the experiement by checking the ‘Enable Pop up help window’.<br>
+Remember that not all experiements have instructions guides.</p>
+<p><img src="images/2.jpg" alt="alt text"></p>
+<p><strong>Step4</strong>: Make the circuit connections as told. Then connect the expeyes device to your computer’s USB port using the data cable and follow the instructions to perform the experiment.</p>
+<p><img src="images/3.jpg" alt="alt text"></p>
+<blockquote>
+<p><strong>Information</strong>: If you happen to receive a ‘Error. Try Device-&gt;Reconnect’ message, it means either your device isn’t properly connected to your computer or the drivers for Expeyes are missing.</p>
+</blockquote>
+<p>Try clicking the Device option on the top left corner and click the Reconnect submenu.<br>
+Now, try performing the experiment again.</p>
+</div>
+</body>
+
+</html>
