@@ -2,7 +2,7 @@
 Version=5.0.0
 Type=Application
 
-Exec=sh -c "$HOME/expgit/expeyesRVCE/run"
+Exec=sh -c "/usr/share/eyes17/run"
 Icon=eyes17-logo.png
 
 Name=ExpEYES-RVCE

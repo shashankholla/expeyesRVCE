@@ -1,4 +1,4 @@
-Package: eyes17
+Package: eyesRVCE17
 Priority: extra
 Depends: python-serial(>=2.0.0), python-pyqtgraph(>=0.9.10),
          python-scipy(>=0.13.0), python-configparser(>= 3.0.0)
