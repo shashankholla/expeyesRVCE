@@ -8,7 +8,7 @@ Note: This code is based off of [Expeyes website](http://expeyes.in) and is unde
 ```
 cd ~/Downloads
 wget https://raw.githubusercontent.com/shashankholla/expeyesRVCE/master/install-expeyes.sh
-sudo ./install-expeyes.sh
+sudo bash ./install-expeyes.sh
 ```
 
 
