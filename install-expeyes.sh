@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ~/Documents
-mkdir expeyes
+sudo mkdir expeyes
 cd expeyes
 wget https://github.com/shashankholla/expeyesRVCE/raw/master/expeyesRVCE-0.0.1.deb
 dpkg -i expeyesRVCE-0.0.1.deb
