@@ -1,3 +1,2 @@
 #!/bin/sh
-cd $HOME/expgit/expeyesRVCE/
-python3 $HOME/expgit/expeyesRVCE/main.py
+python3 /usr/share/eyes17/main.py
