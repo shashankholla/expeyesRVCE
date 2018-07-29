@@ -3,11 +3,11 @@ Note: This code is based off of [Expeyes website](http://expeyes.in) and is unde
 
 ## How to install expeyes on an Ubuntu based Linux Distribution?
 
-1. Open the terminal by pressing Win+T
+1. Open the terminal by pressing Win+Alt+T
 2. Copy paste the following commands
 ```
 cd ~/Downloads
-wget https://raw.githubusercontent.com/shashankholla/expeyesRVCE/master/install-expeyes.sh
+wget -o https://raw.githubusercontent.com/shashankholla/expeyesRVCE/master/install-expeyes.sh
 sudo bash ./install-expeyes.sh
 ```
 
