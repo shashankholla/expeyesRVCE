@@ -3,9 +3,11 @@ sudo apt-get -y install python3-pip
 
 
 cd ~/Downloads
-wget https://github.com/shashankholla/expeyesRVCE/raw/master/requirements.txt
+mkdir ExpeyesRVCEInstaller
+cd ExpeyesRVCEInstaller
+wget -o https://github.com/shashankholla/expeyesRVCE/raw/master/requirements.txt
 pip3 install -r requirements.txt
-wget https://github.com/shashankholla/expeyesRVCE/raw/master/expeyesRVCE-0.0.1.deb
+wget -o https://github.com/shashankholla/expeyesRVCE/raw/master/expeyesRVCE-0.0.1.deb
 dpkg -i --force-overwrite expeyesRVCE-0.0.1.deb
 rm -f expeyesRVCE-0.0.1.deb
 rm -f requirements.txt
