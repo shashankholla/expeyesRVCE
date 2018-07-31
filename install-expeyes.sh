@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 sudo apt-get -y install python3-pip 
+sudo apt install libglvnd-dev
 cd ~/Downloads
 mkdir ExpeyesRVCEInstaller
 cd ExpeyesRVCEInstaller
