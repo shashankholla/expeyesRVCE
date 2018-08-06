@@ -29,7 +29,7 @@ class Expt(QWidget):
 	inputVMAX = 0.5
 	outputVMIN = 0
 	outputVMAX = 5
-
+	oldVoutput = 0
 	STEP = 0.005	   # 50 mV
 	STEP2 = 0.05
 	data = [ [], [] ]
@@ -521,6 +521,7 @@ class Expt(QWidget):
 		#print(va,i)		   # in mA, R= 1k
 		self.data2[0].append(va)
 		self.data2[1].append(i)
+
 		self.Results.append("("+str(round(float(va),2)) + "V, "+str(round(float(i),2))+"uA)")
 		self.VSET2 += self.STEP2
 		print(self.VSET2)
@@ -546,11 +547,11 @@ class Expt(QWidget):
 	def startOutput(self):
 		if self.running == True: return
 		V_BASE = self.VBtext.text()
-		self.p.set_pv1(0)
-		self.p.set_pv2(0)
+		
 		self.VSET2 = 0
 		STEP = self.UserStep.text()
 		vbset = float(V_BASE)
+		self.Results.setText("")
 		print("vbset:",vbset)
 		try:
 			
@@ -562,6 +563,8 @@ class Expt(QWidget):
 			return
 				
 		try:
+			self.p.set_pv1(0)
+			self.p.set_pv2(0)
 			self.p.set_pv1(5.0)
 					# Collector to 5V
 			
@@ -599,6 +602,8 @@ class Expt(QWidget):
 		self.startInputButton.setEnabled(True)
 
 	def clear(self):
+		self.ResultsInput.setText("")
+		self.Results.setText("")
 		for k in self.legends:
 			self.pwin.removeItem(k)
 		for k in self.traces:

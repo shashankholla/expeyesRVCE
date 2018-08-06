@@ -159,8 +159,8 @@ Physics1stSem = [
 	[QT_TRANSLATE_NOOP('MainWindow','RC Transient response'),'RCtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RL Transient response'),'RLtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RLC transient response'),'RLCtransient'],
-	[QT_TRANSLATE_NOOP('MainWindow','Diode Characteristics'),'diodeIV']
-
+	[QT_TRANSLATE_NOOP('MainWindow','Diode Characteristics'),'diodeIV'],
+	[QT_TRANSLATE_NOOP('MainWindow','RLC Steady state response'),'RLCsteadystate_N']
 ]
 
 
@@ -198,7 +198,7 @@ class expeyesHelpClass(QWebView):
 
 class MainWindow(QMainWindow):
 	WIDTH = 950
-	HEIGHT = 600
+	HEIGHT = 700
 	expWidget = None
 	expName = ''
 	hlpName = ''
