@@ -15,10 +15,11 @@ import pyqtgraph as pg
 pf = platform.platform()
 print (pf)	
 if 'Windows' in pf:
+	print("Windows")
 	import diodeIV, editor, filterCircuit, induction, MPU6050, npnCEout, pendulumVelocity
 	import plotIV, pnpCEout, pt100, RCtransient, RLCsteadystate, RLCtransient
 	import RLtransient, rodPendulum, scope, soundBeats, soundFreqResp, soundVelocity
-	import sr04dist, utils, logger, XYplot, npnCE_N
+	import sr04dist, utils, logger, XYplot, RLCsteadystate_N
 
 schoolExpts = [ 
 [QT_TRANSLATE_NOOP('MainWindow',"Voltage measurement"), 'measure-dc'],
@@ -161,6 +162,8 @@ Physics1stSem = [
 	[QT_TRANSLATE_NOOP('MainWindow','RLC transient response'),'RLCtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','Diode Characteristics'),'diodeIV'],
 	[QT_TRANSLATE_NOOP('MainWindow','RLC Steady state response'),'RLCsteadystate_N']
+	[QT_TRANSLATE_NOOP('MainWindow','Fibre Optic'),'fibreOptic']
+	
 ]
 
 
@@ -188,6 +191,7 @@ class expeyesHelpClass(QWebView):
 		QWebView.__init__(self)
 		
 		fn = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html', 'help.html')
+		print(fn)
 		self.load(QUrl.fromLocalFile(fn))
 		self.setWindowTitle(unicode(self.tr('Help: %s')) %name[0])
 		self.setMaximumSize(QSize(900, 1200))
@@ -236,7 +240,7 @@ class MainWindow(QMainWindow):
 		self.label.setAlignment(Qt.AlignRight)
 		self.statusBar.addWidget(self.label,20)
 		
-		self.callExpt(Physics1stSem[0])					# Start the scope by default
+		self.callExpt(Physics1stSem[-1])					# Start the scope by default
 		
 		self.screen = QDesktopWidget().screenGeometry()
 		self.show()
@@ -404,6 +408,10 @@ class MainWindow(QMainWindow):
 		x = em.addMenu(self.tr("ECE 3rd Sem"))
 		y = em.addMenu(self.tr("Physics 1st Sem"))
 		
+
+
+
+
 		for e in ECE3rdSemExptScope:
 			x.addAction(self.tr(e[0]),  lambda item=e: self.scope_help(item))
 		for e in ECE3rdSemExpt:
