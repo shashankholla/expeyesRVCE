@@ -19,7 +19,7 @@ if 'Windows' in pf:
 	import diodeIV, editor, filterCircuit, induction, MPU6050, npnCEout, pendulumVelocity
 	import plotIV, pnpCEout, pt100, RCtransient, RLCsteadystate, RLCtransient
 	import RLtransient, rodPendulum, scope, soundBeats, soundFreqResp, soundVelocity
-	import sr04dist, utils, logger, XYplot, RLCsteadystate_N
+	import sr04dist, utils, logger, XYplot, RLCsteadystate_N, fibreOptic
 
 schoolExpts = [ 
 [QT_TRANSLATE_NOOP('MainWindow',"Voltage measurement"), 'measure-dc'],
@@ -161,7 +161,7 @@ Physics1stSem = [
 	[QT_TRANSLATE_NOOP('MainWindow','RL Transient response'),'RLtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RLC transient response'),'RLCtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','Diode Characteristics'),'diodeIV'],
-	[QT_TRANSLATE_NOOP('MainWindow','RLC Steady state response'),'RLCsteadystate_N']
+	[QT_TRANSLATE_NOOP('MainWindow','RLC Steady state response'),'RLCsteadystate_N'],
 	[QT_TRANSLATE_NOOP('MainWindow','Fibre Optic'),'fibreOptic']
 	
 ]
