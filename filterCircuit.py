@@ -172,7 +172,8 @@ class Expt(QWidget):
 		goodFit = False
 		for k in range(3):	          # try 3 times
 			try:
-				t,v, tt,vv = self.p.capture2(NP, int(self.TG))	
+				t,v, tt,vv = p = self.p.capture2(NP, int(self.TG))	
+				print(p)
 			except:
 				self.comerr()
 				return 

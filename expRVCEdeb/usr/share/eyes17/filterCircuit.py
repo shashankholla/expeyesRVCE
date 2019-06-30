@@ -146,6 +146,7 @@ class Expt(QWidget):
 			return True
 				
 	def update(self):
+		print("In update")
 		if self.running == False:
 			return
 		try:	
@@ -168,11 +169,13 @@ class Expt(QWidget):
 			self.TG = self.MINDEL
 		elif self.TG > self.MAXDEL:
 			self.TG = self.MAXDEL
-
+		print("Here")
 		goodFit = False
 		for k in range(3):	          # try 3 times
 			try:
-				t,v, tt,vv = self.p.capture2(NP, int(self.TG))	
+				a = self.p.capture2(NP, int(self.TG))	
+				print(a)
+				t,v, tt,vv = a
 			except:
 				self.comerr()
 				return 
@@ -247,7 +250,7 @@ class Expt(QWidget):
 		self.trial += 1
 		self.gainMax = 0.0
 		self.msg(self.tr('Started'))
-
+		print("STARTED")
 
 	def stop(self):
 		if self.running == False: return

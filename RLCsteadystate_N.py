@@ -59,11 +59,13 @@ class Expt(QWidget):
 	TBval = 4			# timebase list index
 	Trigindex = 0
 	Triglevel = 0
+	legends = []
 	#resCols = ['w','y','g','r','w','m','c']
 
 	def __init__(self, device=None):
 		QWidget.__init__(self)
-		self.p = device										# connection to the device hardware 
+		self.p = device			
+		print(self.p)				# connection to the device hardware 
 		try:
 			self.p.select_range('A1',8.0)
 			self.p.select_range('A2',8.0)
@@ -195,6 +197,9 @@ class Expt(QWidget):
 		full.addWidget(self.msgwin)
 				
 		self.setLayout(full)
+		self.timer = QTimer()
+		self.timer.timeout.connect(self.update)
+		self.timer.start(self.TIMER)
 		
 		
 		#----------------------------- end of init ---------------
@@ -238,7 +243,7 @@ class Expt(QWidget):
 		else:
 			return True
 
-	def update(self):
+	""" def update(self):
 		if self.Pause.isChecked() == True: return
 		try:
 			if self.VLC.isChecked() == True:
@@ -330,7 +335,7 @@ class Expt(QWidget):
 		
 
 		if self.fitFine[0] == 1 and self.fitFine[1] == 1 and self.fitFine[2] == 1:
-			self.draw_phasor()
+			self.draw_phasor() """
 		# End of update
 
 
@@ -353,27 +358,40 @@ class Expt(QWidget):
 			intervals = float(self.intervals.text())
 			start = int(self.sFreq.text())
 			end = int(self.eFreq.text())
-			mStep = update(self)
+			print(C,R,intervals,start,end)
+			
+			#mStep = self.updateStep()
+			mStep = 10
+			
+			print("mStep: " + str(mStep))
 			output = []
-			self.p.set_sine_amp(2)
+			#self.p.set_sine_amp(2)
+			
 			for i in range(start, end, mStep):
-				print(i)
+				#print(i)
+				#print(self.p)
 				f = self.p.set_sine(i)
+				time.sleep(0.2)
+			
+				#print("set sine")
 				volt = self.p.get_voltage('A1')
 				current = volt / R
 				data = (f, current, volt)
-				plot = pg.TextItem(text="", color='y')
+				plot = pg.TextItem(text=str(current), color='y')
 				plot.setPos(f, current)
+				self.legends.append(plot)
 				self.pwin.addItem(plot)
-				
+				print((f, volt))
 				output.append(data)
-			print(output)
+				
+			#print(output)
 
 
 
 
 		except:
 			print("Error")
+			print(traceback.format_exc())
 			self.uResult.setText(self.tr('Invalid Input in some field'))
 	
 	def save_data(self):
