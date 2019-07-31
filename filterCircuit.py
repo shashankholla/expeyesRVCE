@@ -18,12 +18,12 @@ class Expt(QWidget):
 	MAXDEL = 1000
 	
 	FMIN = 200
-	FMAX = 4900
+	FMAX = 500
 	FREQ = FMIN
-	NSTEP = 100
+	NSTEP = 25
 	STEP = 10	  # 10 hz
 	GMIN = 0.0		# filter amplitude Gain
-	GMAX = 3.0
+	GMAX = 12
 	Rload = 560.0
 	data = [ [], [] ]
 	currentTrace = None
@@ -49,7 +49,7 @@ class Expt(QWidget):
 		ax = self.pwin.getAxis('bottom')
 		ax.setLabel(self.tr('Frequency (Hz)'))	
 		ax = self.pwin.getAxis('left')
-		ax.setLabel(self.tr('Amplitude Gain'))
+		ax.setLabel(self.tr('Current (mA)'))
 		self.pwin.disableAutoRange()
 		self.pwin.setXRange(self.FMIN, self.FMAX)
 		self.pwin.setYRange(self.GMIN, self.GMAX)
@@ -87,7 +87,15 @@ class Expt(QWidget):
 		l.setMaximumWidth(20)
 		H.addWidget(l)
 		right.addLayout(H)
-		 
+
+		H = QHBoxLayout()
+		l = QLabel(text=self.tr('R (in Ohms)'))
+		l.setMaximumWidth(75)
+		H.addWidget(l)
+		self.uRes = utils.lineEdit(50, 50, 6, None)
+		H.addWidget(self.uRes)
+		right.addLayout(H)	
+
 		H = QHBoxLayout()
 		l = QLabel(text=self.tr('Number of Steps ='))
 		l.setMaximumWidth(120)
@@ -170,10 +178,10 @@ class Expt(QWidget):
 			self.TG = self.MAXDEL
 
 		goodFit = False
-		for k in range(3):	          # try 3 times
+		for k in range(20):	          # try 3 times
 			try:
 				t,v, tt,vv = p = self.p.capture2(NP, int(self.TG))	
-				print(p)
+				#print(p)
 			except:
 				self.comerr()
 				return 
@@ -191,11 +199,13 @@ class Expt(QWidget):
 					self.msg(self.tr('Fit failed'))
 					fb = None
 				if fb != None:
-					if self.verify_fit(vv,fb[0]) == False:     
-						continue
+					#if self.verify_fit(vv,fb[0]) == False:     
+					#	continue
 					self.data[0].append(fr)
 					gain = abs(fb[1][0]) #/fa[1][0])
-					self.data[1].append(gain)
+					print(gain/float(self.uRes.text()))
+					
+					self.data[1].append((gain/float(self.uRes.text()))*1000)
 					if self.gainMax < gain:
 						self.gainMax = gain
 						self.peakFreq = fr
@@ -247,6 +257,7 @@ class Expt(QWidget):
 		self.index = 0
 		self.trial += 1
 		self.gainMax = 0.0
+		self.p.set_sine_amp(2) #2 -> 3V
 		self.msg(self.tr('Started'))
 
 

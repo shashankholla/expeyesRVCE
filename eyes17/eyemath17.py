@@ -98,28 +98,45 @@ def fit_dsine(xlist, ylist, freq = 0):
 
 #-------------------------- Exponential Fit ----------------------------------------
 def exp_erf(p,y,x):
-	return y - p[0] * exp(p[1]*x) + p[2]
+	return y - p[0] * exp(x*p[1])
 
 def exp_eval(x,p):
-	return p[0] * exp(p[1]*x)  -p[2]
+	return p[0] * exp(x*p[1])
+
+def knee_straight(p,y,x):
+	return y - (p[0]*x + p[1])
+
+def knee_eval(x,p):
+	return (p[0]*x + p[1])
+
 
 def fit_exp(xlist, ylist):
 	size = len(xlist)
 	xa = array(xlist, dtype=float)
 	ya = array(ylist, dtype=float)
-	maxy = max(ya)
-	halfmaxy = maxy / 2.0
-	halftime = 1.0
-	for k in range(size):
-		if abs(ya[k] - halfmaxy) < halfmaxy/100:
-			halftime = xa[k]
-			break 
-	par = [maxy, -halftime,0] 					# Amp, decay, offset
+	print(xa)
+	print(ya)
+	# for i in range(1,size):
+	# 	if(ya[i] - ya[i-1] > 0.04):
+	# 		break
+	xa_s = xa[-20:-10]
+	ya_s = ya[-20:-10]
+
+	# for k in range(size):
+	# 	if abs(ya[k] - halfmaxy) < halfmaxy/100:
+	# 		halftime = xa[k]
+	# 		break 
+	par = [1e-14, 1/25e-3] 					# Amp, decay, offset
 	plsq = leastsq(exp_erf, par,args=(ya,xa))
+	
+	par = [1,-1]
+	st_aprx = leastsq(knee_straight, par,args=(ya_s,xa_s))
+
 	if plsq[1] > 4:
 		return None
 	yfit = exp_eval(xa, plsq[0])
-	return yfit,plsq[0]
+	yfit2 = knee_eval(xa, st_aprx[0])
+	return yfit,plsq[0], xa,yfit2, round(-st_aprx[0][1]/st_aprx[0][0],2)
 
 	#-------------------------- Exponential Fit #2----------------------------------------
 

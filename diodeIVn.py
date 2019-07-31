@@ -31,7 +31,7 @@ class Expt(QWidget):
 		QWidget.__init__(self)
 		self.p = device										# connection to the device hardware 
 		self.traceCols = utils.makeTraceColors()
-		
+		print("Wavelength")
 		self.pwin = pg.PlotWidget()							# pyqtgraph window
 		self.pwin.showGrid(x=True, y=True)					# with grid
 		ax = self.pwin.getAxis('bottom')
@@ -149,11 +149,12 @@ class Expt(QWidget):
 				self.pwin.addItem(l)
 				print(self.pwin)
 			if self.data[1][-1] > 0.1:
-				l = pg.TextItem(text="Forward Biased")
-				#print("Forward Biased Coord",self.data[1][-1],self.data[0][-1])
-				l.setPos(self.data[0][-1],self.data[1][-1])
-				self.legends.append(l)
-				self.pwin.addItem(l)	
+				pass
+				# l = pg.TextItem(text="Forward Biased")
+				# #print("Forward Biased Coord",self.data[1][-1],self.data[0][-1])
+				# l.setPos(self.data[0][-1],self.data[1][-1])
+				# self.legends.append(l)
+				# self.pwin.addItem(l)	
 			return
 		if self.index > 1:			  # Draw the line
 			self.currentTrace.setData(self.data[0], self.data[1])
@@ -164,13 +165,16 @@ class Expt(QWidget):
 
 	def start(self):
 		if self.running == True: return
-		if self.zener.isChecked() == True:
-			self.VMIN = -5
-			self.IMIN = -5
-		else:
-			self.VMIN = 0
-			self.IMIN = 0
+		# if self.zener.isChecked() == True:
+		# 	self.VMIN = -5
+		# 	self.IMIN = -5
+		# else:
+		# 	self.VMIN = 0
+		# 	self.IMIN = 0
+		self.VMIN = 0
+		self.IMIN = 0
 			
+
 		self.pwin.setXRange(self.VMIN, self.VMAX)
 		self.pwin.setYRange(self.IMIN, self.IMAX)
 		try:

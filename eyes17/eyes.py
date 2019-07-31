@@ -2991,7 +2991,7 @@ class Interface():
 		import builtins					# Need to do this since 'eyes.py' redefines 'open'
 		#f = builtins.open(str(filename),'w')
 		print(filename[0])
-		f = builtins.open(filename,'w')
+		f = builtins.open(filename[0],'w')
 		print(data)
 		for xy in data:
 			

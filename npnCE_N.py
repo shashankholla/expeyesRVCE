@@ -52,9 +52,9 @@ class Expt(QWidget):
 		self.pwin = pg.PlotWidget()							# pyqtgraph window
 		self.pwin.showGrid(x=True, y=True)					# with grid
 		ax = self.pwin.getAxis('bottom')
-		ax.setLabel(self.tr('Voltage (V)'))	
+		ax.setLabel(self.tr('Voltage V_BE (V)'))	
 		ax = self.pwin.getAxis('left')
-		ax.setLabel(self.tr('Current(uA)'))
+		ax.setLabel(self.tr('Current Ib (uA)'))
 		self.pwin.disableAutoRange()
 		self.pwin.setXRange(self.inputVMIN, self.inputVMAX)
 		self.pwin.setYRange(self.inputIMIN, self.inputIMAX)
@@ -309,7 +309,10 @@ class Expt(QWidget):
 			print
 			self.clear()
 			ax = self.pwin.getAxis('left')
-			ax.setLabel(self.tr('Current(uA)'))
+			ay = self.pwin.getAxis('bottom')
+			ax.setLabel(self.tr('Current I_B(uA)'))
+			ay.setLabel(self.tr('Voltage V_BE (V)'))
+			
 			self.pwin.disableAutoRange()
 			self.pwin.setXRange(self.inputVMIN, self.inputVMAX)
 			self.pwin.setYRange(self.inputIMIN, self.inputIMAX)
@@ -324,7 +327,10 @@ class Expt(QWidget):
 		if(i == 1):
 			self.clear()
 			ax = self.pwin.getAxis('left')
-			ax.setLabel(self.tr('Current(mA)'))
+			ay = self.pwin.getAxis('bottom')
+			ax.setLabel(self.tr('Current I_C(mA)'))
+			ay.setLabel(self.tr('Voltage V_CE (V)'))
+			
 			self.pwin.disableAutoRange()
 			self.pwin.setXRange(self.outputVMIN, self.outputVMAX)
 			self.pwin.setYRange(self.outputIMIN, self.outputIMAX)
@@ -522,7 +528,7 @@ class Expt(QWidget):
 		self.data2[0].append(va)
 		self.data2[1].append(i)
 
-		self.Results.append("("+str(round(float(va),2)) + "V, "+str(round(float(i),2))+"uA)")
+		self.Results.append("("+str(round(float(va),2)) + "V, "+str(round(float(i),2))+"mA)")
 		self.VSET2 += self.STEP2
 		print(self.VSET2)
 		if self.VSET2 > self.VMAX2:

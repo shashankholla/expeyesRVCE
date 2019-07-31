@@ -3,7 +3,9 @@ from __future__ import print_function
 import sys, time, utils, math, os.path
 
 from QtVersion import *
-
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 import pyqtgraph as pg
 import numpy as np
 import eyes17.eyemath17 as em
@@ -18,13 +20,13 @@ class Expt(QWidget):
 	MAXDEL = 1000
 	
 	FMIN = 200
-	FMAX = 4900
+	FMAX = 500
 	FREQ = FMIN
-	NSTEP = 100
+	NSTEP = 25
 	STEP = 10	  # 10 hz
 	GMIN = 0.0		# filter amplitude Gain
-	GMAX = 3.0
-	Rload = 50.0
+	GMAX = 12
+	Rload = 560.0
 	data = [ [], [] ]
 	currentTrace = None
 	traces = []
@@ -49,7 +51,7 @@ class Expt(QWidget):
 		ax = self.pwin.getAxis('bottom')
 		ax.setLabel(self.tr('Frequency (Hz)'))	
 		ax = self.pwin.getAxis('left')
-		ax.setLabel(self.tr('Amplitude Gain'))
+		ax.setLabel(self.tr('Current (mA)'))
 		self.pwin.disableAutoRange()
 		self.pwin.setXRange(self.FMIN, self.FMAX)
 		self.pwin.setYRange(self.GMIN, self.GMAX)
@@ -87,15 +89,15 @@ class Expt(QWidget):
 		l.setMaximumWidth(20)
 		H.addWidget(l)
 		right.addLayout(H)
-		print("OK")
+
 		H = QHBoxLayout()
 		l = QLabel(text=self.tr('R (in Ohms)'))
 		l.setMaximumWidth(75)
 		H.addWidget(l)
-		self.uRes = utils.lineEdit(50, 1000, 6, None)
+		self.uRes = utils.lineEdit(50, 50, 6, None)
 		H.addWidget(self.uRes)
-		right.addLayout(H)
-		 
+		right.addLayout(H)	
+
 		H = QHBoxLayout()
 		l = QLabel(text=self.tr('Number of Steps ='))
 		l.setMaximumWidth(120)
@@ -104,11 +106,42 @@ class Expt(QWidget):
 		H.addWidget(self.NSTEPtext)
 		right.addLayout(H)
 
+		H = QVBoxLayout()
+		rightWidget = QWidget()
+		rightWidget.setLayout(H)
+
+		
+		rightWidget = QWidget()
+
+		rightLayout = QVBoxLayout()
+		rightWidget.setLayout(rightLayout)
+
+		annotate = QFormLayout()
+		annotLabel = QLabel("Amplitude")
+		
+	
+		annotate.addWidget(annotLabel)
+		
+		self.btn1 = QRadioButton("3V", rightWidget)
+		self.btn2 = QRadioButton("1V", rightWidget)
+		self.btn1.setChecked(True)
+		
+		btns = [self.btn1,self.btn2]
+		
+    
+		for btn in btns:
+		
+			annotate.addWidget(btn)
+
+		right.addLayout(annotate)
+
+		
+
 		b = QPushButton(self.tr("Start"))
 		right.addWidget(b)
 		b.clicked.connect(self.start)		
 		
-		self.FreqLabel = QLabel(self.tr(""))
+		self.FreqLabel = QLabel(self.tr("Frequency:.."))
 		right.addWidget(self.FreqLabel)
 
 		b = QPushButton(self.tr("Stop"))
@@ -154,7 +187,6 @@ class Expt(QWidget):
 			return True
 				
 	def update(self):
-		print("In update")
 		if self.running == False:
 			return
 		try:	
@@ -177,13 +209,12 @@ class Expt(QWidget):
 			self.TG = self.MINDEL
 		elif self.TG > self.MAXDEL:
 			self.TG = self.MAXDEL
-		print("Here")
+
 		goodFit = False
-		for k in range(3):	          # try 3 times
+		for k in range(20):	          # try 3 times
 			try:
-				a = self.p.capture2(NP, int(self.TG))	
-				print(a)
-				t,v, tt,vv = a
+				t,v, tt,vv = p = self.p.capture2(NP, int(self.TG))	
+				#print(p)
 			except:
 				self.comerr()
 				return 
@@ -201,11 +232,13 @@ class Expt(QWidget):
 					self.msg(self.tr('Fit failed'))
 					fb = None
 				if fb != None:
-					if self.verify_fit(vv,fb[0]) == False:     
-						continue
+					#if self.verify_fit(vv,fb[0]) == False:     
+					#	continue
 					self.data[0].append(fr)
 					gain = abs(fb[1][0]) #/fa[1][0])
-					self.data[1].append(gain/self.Rload)
+					print(gain/float(self.uRes.text()))
+					
+					self.data[1].append((gain/float(self.uRes.text()))*1000)
 					if self.gainMax < gain:
 						self.gainMax = gain
 						self.peakFreq = fr
@@ -231,7 +264,11 @@ class Expt(QWidget):
 
 	def start(self):
 		if self.running == True: return
-		
+		if(self.btn1.isChecked):
+			self.p.set_sine_amp(2) #2 -> 3V
+		if(self.btn2.isChecked):
+			
+			self.p.set_sine_amp(1) #2 -> 3V
 		try:
 			self.FMIN = float(self.AWGstart.text())
 			self.FMAX = float(self.AWGstop.text())
@@ -257,8 +294,10 @@ class Expt(QWidget):
 		self.index = 0
 		self.trial += 1
 		self.gainMax = 0.0
+
+		
 		self.msg(self.tr('Started'))
-		print("STARTED")
+
 
 	def stop(self):
 		if self.running == False: return
