@@ -15,10 +15,11 @@ import pyqtgraph as pg
 pf = platform.platform()
 print (pf)	
 if 'Windows' in pf:
+	print("Windows")
 	import diodeIV, editor, filterCircuit, induction, MPU6050, npnCEout, pendulumVelocity
 	import plotIV, pnpCEout, pt100, RCtransient, RLCsteadystate, RLCtransient
 	import RLtransient, rodPendulum, scope, soundBeats, soundFreqResp, soundVelocity
-	import sr04dist, utils, logger, XYplot, npnCE_N
+	import sr04dist, utils, logger, XYplot, RLCsteadystate_N, fibreOptic
 
 schoolExpts = [ 
 [QT_TRANSLATE_NOOP('MainWindow',"Voltage measurement"), 'measure-dc'],
@@ -159,8 +160,11 @@ Physics1stSem = [
 	[QT_TRANSLATE_NOOP('MainWindow','RC Transient response'),'RCtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RL Transient response'),'RLtransient'],
 	[QT_TRANSLATE_NOOP('MainWindow','RLC transient response'),'RLCtransient'],
-	[QT_TRANSLATE_NOOP('MainWindow','Diode Characteristics'),'diodeIV'],
-	[QT_TRANSLATE_NOOP('MainWindow','RLC Steady state response'),'RLCsteadystate_N']
+	[QT_TRANSLATE_NOOP('MainWindow','Wavelength of LED'),'diodeIVn'],
+	[QT_TRANSLATE_NOOP('MainWindow','RLC Steady state response'),'RLCsteadystate_N'],
+	[QT_TRANSLATE_NOOP('MainWindow','Fibre Optic'),'fibreOptic'],
+	[QT_TRANSLATE_NOOP('MainWindow','Series LCR circuit'),'seriesLCR']
+	
 ]
 
 
@@ -183,17 +187,34 @@ class helpWin(QWebView):
 		self.move(screen.width()-self.width()-20, screen.height()-self.height()-60)
 	def closeEvent(self,QCloseEvent):
 		MainWindow.disableCheckBox(mw)
+		
 class expeyesHelpClass(QWebView):
 	def __init__(self, name = ''):
 		QWebView.__init__(self)
-		
+		print(name)
 		fn = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html', 'help.html')
+		print(fn)
 		self.load(QUrl.fromLocalFile(fn))
 		self.setWindowTitle(unicode(self.tr('Help: %s')) %name[0])
 		self.setMaximumSize(QSize(900, 1200))
 		self.show()
 		screen = QDesktopWidget().screenGeometry()
 		self.move(screen.width()-self.width()-20, screen.height()-self.height()-60)
+		
+class expeyesContributersClass(QWebView):
+	def __init__(self, name = ''):
+		QWebView.__init__(self)
+		
+		fn = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'html', 'contributers.html')
+		print(fn)
+		self.load(QUrl.fromLocalFile(fn))
+		self.setWindowTitle(unicode(self.tr('Help: %s')) %name[0])
+		self.setMaximumSize(QSize(900, 1200))
+		self.show()
+		screen = QDesktopWidget().screenGeometry()
+		self.move(screen.width()-self.width()-20, screen.height()-self.height()-60)
+
+
 
 
 class MainWindow(QMainWindow):
@@ -236,7 +257,7 @@ class MainWindow(QMainWindow):
 		self.label.setAlignment(Qt.AlignRight)
 		self.statusBar.addWidget(self.label,20)
 		
-		self.callExpt(Physics1stSem[0])					# Start the scope by default
+		self.callExpt(Physics1stSem[-1])					# Start the scope by default
 		
 		self.screen = QDesktopWidget().screenGeometry()
 		self.show()
@@ -402,8 +423,12 @@ class MainWindow(QMainWindow):
 
 		em = bar.addMenu(self.tr("RVCE"))
 		x = em.addMenu(self.tr("ECE 3rd Sem"))
-		y = em.addMenu(self.tr("Physics 1st Sem"))
+		y = em.addMenu(self.tr("Physics 1st Year"))
 		
+
+
+
+
 		for e in ECE3rdSemExptScope:
 			x.addAction(self.tr(e[0]),  lambda item=e: self.scope_help(item))
 		for e in ECE3rdSemExpt:
@@ -416,6 +441,11 @@ class MainWindow(QMainWindow):
 		self.help = QAction("Help")
 		bar.addAction(self.help)
 		self.help.triggered.connect(self.expeyesHelp)
+		
+		self.contributers = QAction('Contributers')
+		bar.addAction(self.contributers)
+		self.contributers.triggered.connect(self.contributersMenu)
+		
 
 	def expeyesHelp(self):
 	
@@ -424,6 +454,9 @@ class MainWindow(QMainWindow):
 		#else:
 		#	self.ehwin.hide()
 		
+	def contributersMenu(self):
+		self.ehwin2 = expeyesContributersClass(("Contributers","contributers"))
+		self.ehwin2.show()
 
 	def reconnect(self):
 		global p
