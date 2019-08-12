@@ -78,7 +78,7 @@ class Interface():
 
 	BAUD = 500000
 	W1Type = 'sine'
-	def __init__(self,timeout=1.0,**kwargs):
+	def __init__(self,timeout=5.0,**kwargs):
 		self.verbose=kwargs.get('verbose',False)
 		self.initialArgs = kwargs
 		self.generic_name = 'ExpEYES17'
@@ -2991,7 +2991,8 @@ class Interface():
 		import builtins					# Need to do this since 'eyes.py' redefines 'open'
 		#f = builtins.open(str(filename),'w')
 		print(filename[0])
-		f = builtins.open(filename[0],'w')
+		print(data, filename)
+		f = builtins.open(filename,'w')
 		print(data)
 		for xy in data:
 			

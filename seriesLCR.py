@@ -19,7 +19,7 @@ class Expt(QWidget):
 	MINDEL = 1			# minimum time between samples, in usecs
 	MAXDEL = 1000
 	
-	FMIN = 200
+	FMIN = 1
 	FMAX = 500
 	FREQ = FMIN
 	NSTEP = 25
@@ -264,9 +264,9 @@ class Expt(QWidget):
 
 	def start(self):
 		if self.running == True: return
-		if(self.btn1.isChecked):
+		if(self.btn1.isChecked()):
 			self.p.set_sine_amp(2) #2 -> 3V
-		if(self.btn2.isChecked):
+		if(self.btn2.isChecked()):
 			
 			self.p.set_sine_amp(1) #2 -> 3V
 		try:
